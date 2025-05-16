@@ -1,11 +1,12 @@
 export const $ = (template, props) => {
   const wrapper = document.createElement("div");
   wrapper.innerHTML = template;
-  const dom = wrapper.firstChild;
 
-  for (const k in props) {
-    dom[k] = props[k];
+  const domNode = wrapper.firstChild;
+
+  for (const key in props) {
+    domNode[key] = props[key];
   }
 
-  return dom;
+  return domNode;
 };

@@ -1,11 +1,10 @@
-export const ReactCurrentDispatcher = {
-  current: {},
-};
+export const ReactCurrentDispatcher = { current: null };
 
 export const useState = (initialState) => {
-  ReactCurrentDispatcher.current.setInitialState(initialState);
+  ReactCurrentDispatcher.current.setInitaState(initialState);
 
-  const state = ReactCurrentDispatcher.current.currentState.state;
-
-  return [state, ReactCurrentDispatcher.current.dispatchState];
+  return [
+    ReactCurrentDispatcher.current.currentState.state,
+    ReactCurrentDispatcher.current.dispatchState,
+  ];
 };

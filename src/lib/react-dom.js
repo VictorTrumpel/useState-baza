@@ -1,64 +1,61 @@
 import { ReactCurrentDispatcher } from "./react";
 
-export function render(fiberNode) {
+export const render = (fiberNode) => {
   const queue = [fiberNode];
 
   while (queue.length > 0) {
-    const node = queue.shift();
+    const fiber = queue.shift();
+    const domNode = fiber.createDOMNode();
 
-    const domNode = node.renderDOMNode();
+    fiber.return.stateNode.append(domNode);
 
-    node.return.stateNode.append(domNode);
-
-    queue.push(...node.children);
+    queue.push(...fiber.childern);
   }
-}
+};
 
 export class FiberNode {
-  children = [];
+  childern = [];
 
-  stateNode = null;
+  stateNode = null; // dom узел конкретной файбер ноды
+
+  return = null; // ссылка на родительскую файбер ноду
 
   memoizedState = {
     state: undefined,
     isInited: false,
   };
 
-  return = null;
-
-  constructor(renderFunc, ...children) {
+  constructor(renderFunc, ...childern) {
     this.renderFunc = renderFunc;
-    this.children = children;
-    for (const child of this.children) {
+    this.childern = childern;
+
+    for (const child of childern) {
       child.return = this;
     }
   }
 
-  setInitialState = (initialState) => {
+  setInitaState = (initialState) => {
     if (this.memoizedState.isInited) return;
-    this.memoizedState.state = initialState;
     this.memoizedState.isInited = true;
+    this.memoizedState.state = initialState;
   };
 
   dispatchState = (newState) => {
     this.memoizedState.isInited = true;
-
     this.memoizedState.state = newState;
-
     render(this);
   };
 
-  renderDOMNode() {
+  createDOMNode() {
     ReactCurrentDispatcher.current = {
       currentState: this.memoizedState,
-      setInitialState: this.setInitialState,
+      setInitaState: this.setInitaState,
       dispatchState: this.dispatchState,
     };
 
     this.stateNode?.remove();
-
-    this.stateNode = this.renderFunc();
-
+    const domNode = this.renderFunc();
+    this.stateNode = domNode;
     return this.stateNode;
   }
 }

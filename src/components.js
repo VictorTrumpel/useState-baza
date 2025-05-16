@@ -1,65 +1,70 @@
-import { $ } from "./lib/$.js";
-import { useState } from "./lib/react.js";
+import { $ } from "./lib/$";
+import { useState } from "./lib/react";
 
 export const RedClicker = () => {
-  const [count, setCount] = useState(0);
+  const [counter, setCounter] = useState(0);
 
-  console.log("<RedClicker render>");
+  console.log("<RedClicker> render");
 
   const handleClick = () => {
-    setCount(count + 1);
+    setCounter(counter + 1);
   };
 
   return $(
-    /*html*/ `<button class="clicker red-clicker">Red clicker ${count}</button>`,
-    { onclick: handleClick }
+    /*html*/ `<button class="clicker red">Red clicker ${counter}</button>`,
+    {
+      onclick: handleClick,
+    }
   );
 };
 
 export const GreenClicker = () => {
-  const [count, setCount] = useState(1);
+  const [counter, setCounter] = useState(1);
 
-  console.log("<GreenClicker render>");
+  console.log("<GreenClicker> render");
 
   const handleClick = () => {
-    setCount(count + 1);
+    setCounter(counter + 1);
   };
 
   return $(
-    /*html*/ `<button class="clicker green-clicker">Green clicker ${count}</button>`,
-    { onclick: handleClick }
+    /*html*/ `<button class="clicker green">Green clicker ${counter}</button>`,
+    {
+      onclick: handleClick,
+    }
   );
 };
 
 export const BlueClicker = () => {
-  const [count, setCount] = useState(2);
+  const [counter, setCounter] = useState(2);
 
-  console.log("<BlueClicker render>");
+  console.log("<BlueClicker> render");
 
   const handleClick = () => {
-    setCount(count + 1);
+    setCounter(counter + 1);
   };
 
   return $(
-    /*html*/ `<button class="clicker blue-clicker">Blue clicker ${count}</button>`,
-    { onclick: handleClick }
+    /*html*/ `<button class="clicker blue">Blue clicker ${counter}</button>`,
+    {
+      onclick: handleClick,
+    }
   );
 };
 
-export const ClickerList = () => {
-  const [appTitle, setAppTitle] = useState("");
+export const ClickerContainer = () => {
+  const [text, setText] = useState("");
 
-  console.log("<ClickerList render>");
+  console.log("<ClickerContainer> render");
 
-  const handleInputChange = (e) => {
-    console.log("e :>> ", e);
-    setAppTitle(e.target.value);
+  const handleInput = (e) => {
+    setText(e.target.value);
   };
 
   const div = $(/*html*/ `<div></div>`);
-  const input = $(/*html*/ `<input type='text' placeholder="App title" />`, {
-    oninput: handleInputChange,
-    value: appTitle,
+  const input = $(/*html*/ `<input type="text" placeholder='Type...'/>`, {
+    value: text,
+    oninput: handleInput,
   });
 
   div.append(input);

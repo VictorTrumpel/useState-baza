@@ -1,15 +1,14 @@
-import "./lib/$.js";
-import "./index.css";
-import { FiberNode, render } from "./lib/react-dom.js";
+import { FiberNode, render } from "./lib/react-dom";
 import {
-  ClickerList,
   RedClicker,
   GreenClicker,
   BlueClicker,
+  ClickerContainer,
 } from "./components";
+import "./index.css";
 
-export const root = new FiberNode(
-  ClickerList,
+const root = new FiberNode(
+  ClickerContainer,
   new FiberNode(RedClicker),
   new FiberNode(GreenClicker),
   new FiberNode(BlueClicker)
